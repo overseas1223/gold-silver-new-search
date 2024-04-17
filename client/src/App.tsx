@@ -63,7 +63,7 @@ const App = () => {
       ),
     },
     {
-      title: "PostedAt",
+      title: "Date",
       dataIndex: "date",
       key: "date",
       render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
@@ -80,36 +80,6 @@ const App = () => {
       key: "image",
       render: (text: string) => <Image width={200} src={text} />,
     },
-    // {
-    //   title: "Tags",
-    //   key: "tags",
-    //   dataIndex: "tags",
-    //   render: (_, { tags }) => (
-    //     <>
-    //       {tags.map((tag) => {
-    //         let color = tag.length > 5 ? "geekblue" : "green";
-    //         if (tag === "loser") {
-    //           color = "volcano";
-    //         }
-    //         return (
-    //           <Tag color={color} key={tag}>
-    //             {tag.toUpperCase()}
-    //           </Tag>
-    //         );
-    //       })}
-    //     </>
-    //   ),
-    // },
-    // {
-    //   title: "Action",
-    //   key: "action",
-    //   render: (_, record) => (
-    //     <Space size="middle">
-    //       <a>Invite {record.name}</a>
-    //       <a>Delete</a>
-    //     </Space>
-    //   ),
-    // },
   ];
 
   return (
