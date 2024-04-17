@@ -1,6 +1,7 @@
 from flask import Flask, request
 from flask_apscheduler import APScheduler
 from flask_cors import CORS
+from scrape.app import Scrape
 
 app = Flask(__name__)
 CORS(app, support_credentials=True)
@@ -14,8 +15,12 @@ scheduler = APScheduler()
 def scrape_news():
     data = request.get_json()
     type = data["type"]
-    print(type)
-    return { "success": True }, 200
+    scrape_client = Scrape(type)
+    success, data = scrape_client.scrape_data()
+    if success == True:
+        return { "success": True, "news": data }, 200
+    else:
+        return { "success": False }, 400
 
 if __name__ == '__main__':
     scheduler.init_app(app)
