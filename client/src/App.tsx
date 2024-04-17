@@ -9,15 +9,15 @@ import {
   Typography,
   message,
   Table,
-  Image,
 } from "antd";
 import { apis } from "./apis";
+import { column } from "./components/Column";
 
 const App = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const [type, setType] = React.useState("");
   const [news, setNews] = React.useState([]);
-  // const [columns, setColumns] = React.useState([]);
+  const [columns, setColumns] = React.useState<any>([]);
   const [loading, setLoading] = React.useState(false);
 
   const SearchNews = async () => {
@@ -45,42 +45,18 @@ const App = () => {
       setLoading(false);
     }
   };
-  const columns = [
-    {
-      title: "Author",
-      dataIndex: "author",
-      key: "author",
-      render: (text: string) => <span>{text}</span>,
-    },
-    {
-      title: "Title",
-      dataIndex: "title",
-      key: "title",
-      render: (_: any, ele: any) => (
-        <a href={ele.link} target="_blank">
-          {ele.title}
-        </a>
-      ),
-    },
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-      render: (text: string) => <span>{new Date(text).toLocaleString()}</span>,
-    },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      render: (text: string) => <span>{text}</span>,
-    },
-    {
-      title: "Image",
-      dataIndex: "image",
-      key: "image",
-      render: (text: string) => <Image width={200} src={text} />,
-    },
-  ];
+
+  React.useEffect(() => {
+    setNews([]);
+    switch (type) {
+      case "financial_times":
+        setColumns(column.FinancialTimes)
+        break;
+      default:
+        setColumns(column.FinancialTimes);
+        break
+    }
+  }, [type]);
 
   return (
     <Layout.Content
@@ -108,6 +84,9 @@ const App = () => {
           >
             <Select.Option value="financial_times">
               Financial Times (www.ft.com)
+            </Select.Option>
+            <Select.Option value="gold_playbook">
+              Gold Playbook (www.goldplaybook.com)
             </Select.Option>
           </Select>
         </Col>
